@@ -10,8 +10,6 @@ scores.nikita += 30;
 
 console.log(scores);
 
-
-
 //#2. Вглубь объектов и массивов
 var myCrazyObject = {
     "name": "Нелепый объект",
