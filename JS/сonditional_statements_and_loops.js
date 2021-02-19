@@ -25,7 +25,6 @@ for (let i = 0; i < animals.length; i++){
 console.log(animals);
 
 
-//----------------------------------------------------------------------------
 // #2. Генератор случайных строк
 
 const alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
@@ -39,7 +38,6 @@ while(randomString.length < stringLenght) {
 
 console.log(randomString);
 
-//----------------------------------------------------------------------------
 // #3. h4ck3r sp34k перевести на хакерский язык
 
 const input = "javascript is awesome";
