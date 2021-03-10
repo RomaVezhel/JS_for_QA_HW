@@ -1,94 +1,115 @@
-//Отложенное выполнение кода и setTimeout
+// #1. Следом за кликами
 
-// setTimeout(func, timeout);
-//----------------------------------
+$("html").click(function (event) {
+  // добавили обработчик события mousemove
+  $("#heading").offset({
+    left: event.pageX,
+    top: event.pageY,
+  });
+});
 
-// let timeUp = function () {
-//   alert("Время вышло!");
-// };
-//
-// setTimeout(timeUp, 2000);
-//----------------------------------------------------------------------------
+// #2. Создайте собственную анимацию
 
-// Отмена действия таймера clearTimeout();
-// установили таймер «сделай домашку»
+let direction = "right";
+let offset = 0;
 
-// let doHomeworkAlarm = function () {
-//   alert("Эй! Пора делать домашку!");
-// };
-// let timeoutId = setTimeout(doHomeworkAlarm, 2000); // хранится id таймера
-//
-// clearTimeout(timeoutId);
-//-------------------------------------------------------------------------------
+$("#heading").offset({ left: offset, top: offset });
 
-// пример не из книги
-// отправить API запрос, а потом подождать ответ
-//
-// function first() {
-//   // Симулируем задержку кода
-//   setTimeout(function () {
-//     console.log(1);
-//   }, 2000);
-// }
-//
-// function second() {
-//   console.log(2);
-// }
-//
-// first();
-// second();
-// ---------------------------------------------------------------------------------
-// Многократный запуск кода и setInterval
+const animatedTitle = function () {
+  if (direction === "right") {
+    $("#heading").offset({ left: offset });
+    offset++;
+    if (offset > 200) {
+      offset = 0;
+      direction = "bottom";
+    }
+  } else if (direction === "bottom") {
+    $("#heading").offset({ top: offset });
+    offset++;
+    if (offset > 200) {
+      offset = 200;
+      direction = "left";
+    }
+  } else if (direction === "left") {
+    $("#heading").offset({ left: offset });
+    offset--;
+    if (offset < 0) {
+      offset = 200;
+      direction = "top";
+    }
+  } else if (direction === "top") {
+    $("#heading").offset({ top: offset });
+    offset--;
+    if (offset < 0) {
+      offset = 0;
+      direction = "right";
+    }
+  }
+};
 
-// setInterval(func, interval);
-//----------------------------------------------------
-// Выводим сообщение в console
+// #3. Остановка анимации по клику
 
-// let counter = 1;
-// const printMessage = function () {
-//   console.log(`Ты смотришь в консоль уже ${counter} сек`);
-//   counter++;
-// };
-// let intervalId = setInterval(printMessage, 1000);
-//
-// clearInterval(intervalId);
+const intervalId = setInterval(animatedTitle, 30);
 
-// -----------------------------------------------------------
+$("#heading").click(function () {
+  clearInterval(intervalId);
+});
 
-//сдвигаем элемент вправо на 200px
+// #4. Напишите игру "Кликни по заголовку"
 
-// let leftOffset = 0;
-//
-// const moveHeading = function () {
-//   $("#heading").offset({ left: leftOffset });
-//   leftOffset++;
-//
-//   if (leftOffset > 200) {
-//     leftOffset = 0;
-//   }
-// };
-// setInterval(moveHeading, 30); // код вызывается примерно 33 раза в секунду, смещаясь на 1 пиксель
-//    каждые 30 миллисекунд
+let direction = "right";
+let offset = 0;
+let intervalLength = 120;
+let clicks = 0;
 
-//---------------------------------------------------------------------------------
+$("#heading").offset({ left: offset, top: offset });
 
-// Реакция на действия пользователя (события)
+let animatedTitle = function () {
+  if (direction === "right") {
+    $("#heading").offset({ left: offset });
+    offset++;
 
-// Реакция на клики
+    if (offset > 200) {
+      offset = 0;
+      direction = "bottom";
+    }
+  } else if (direction === "bottom") {
+    $("#heading").offset({ top: offset });
+    offset++;
 
-// let clickHandler = function (event) {
-//   console.log("Клик! " + event.pageX + " " + event.pageY);
-// };
-// $("h1").click(clickHandler);
+    if (offset > 200) {
+      offset = 200;
+      direction = "left";
+    }
+  } else if (direction === "left") {
+    $("#heading").offset({ left: offset });
+    offset--;
 
-// -----------------------------------------------------------------------------------------
+    if (offset < 0) {
+      offset = 200;
+      direction = "top";
+    }
+  } else if (direction === "top") {
+    $("#heading").offset({ top: offset });
+    offset--;
 
-//Событие mousemove, перемещение мышки
+    if (offset < 0) {
+      offset = 0;
+      direction = "right";
+    }
+  }
+};
 
-// $("html").mousemove(function (event) {
-//   // добавили обработчик события mousemove
-//   $("#heading").offset({
-//     left: event.pageX,
-//     top: event.pageY,
-//   });
-// });
+let intervalId = setInterval(animatedTitle, intervalLength);
+
+$("#heading").click(function () {
+  clearInterval(intervalId);
+  intervalLength /= 2;
+  clicks++;
+
+  if (clicks > 10) {
+    $("#heading").text("Your are win!");
+  } else {
+    intervalId = setInterval(animatedTitle, intervalLength);
+  }
+});
