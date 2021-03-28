@@ -67,7 +67,8 @@ class Car {
   }
 
   draw() {
-    const carHtml = '<img src="https://nostarch.com/images/car.png" alt="image">';
+    const carHtml =
+      '<img src="https://nostarch.com/images/car.png" alt="image">';
     this.carElement = $(carHtml);
 
     this.carElement.css({
